@@ -23,13 +23,14 @@ int main()
    curve.setOrigin(500, 370);
 
    Shape shape1(curve);
-   shape1.setOutlineColor(Color::Green);
-   shape1.setOutlineWidth(1);
+   shape1.setVertexColor(Color::Green);
+   shape1.setLiaisonWidth(1);
    
    Geom geom2 = Geom::star({0, 0}, 0, 30, 60, 20);
 
    Shape shape2(geom2);
-   shape2.setFillColor(Color::Yellow);
+   shape2.showLiaison(false);
+   shape2.setFaceColor(Color::Yellow);
 
    Kinetic kinetic(curve, 400, 0, true);
    

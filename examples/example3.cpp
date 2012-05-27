@@ -34,8 +34,8 @@ int main()
 			  + Geom::segment({125, 475}, {175, 475});
 	
 	Shape shape(geom);
-	shape.setOutlineWidth(3);
-	shape.setOutlineColor(Color::White);
+	shape.setLiaisonWidth(3);
+	shape.setLiaisonColor(Color::White);
 
 	Light light({400, 0}, 150, Color::Green);
 	Spot spot({800, 400}, 0, 400, 0.785398163, Color(190, 150, 150));
