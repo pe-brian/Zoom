@@ -14,10 +14,8 @@ using namespace zin;
 int main()
 {
 	sf::RenderWindow App(sf::VideoMode(1000, 700, 32), "Zoom example 2");
-	sf::Text text;
-	bool switched = false;
 
-	Shape::debugModeEnabled = false;
+	bool switched = false;
 
 	Geom geom1 = Geom::polygon({{120, 60}, {140, 20}, {180, 0}, {220, 20}, {240, 80}, {220, 140}, {180, 180}, {120, 200}, {60, 180}, {20, 140}, {0, 80}, {20, 20}, {60, 0}, {100, 20}});
 	geom1.setPosition(200, 100);
@@ -61,7 +59,6 @@ int main()
 	
 		App.clear(sf::Color(30, 30, 30));
 	    App.draw(switched ? shape2 : shape1);
-	    App.draw(text);
 		App.display();
 	}
 	

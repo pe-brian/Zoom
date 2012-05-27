@@ -42,23 +42,6 @@ m_pointSize(0)
 }
 
 ////////////////////////////////////////////////////////////
-void Shape::onNotification(size_t notification, size_t id)
-{
-    std::cout << "notification" << std::endl;
-    switch( notification )
-    {
-        case Geom::NONE : break;
-        case Geom::CREATED_VERTEX : break;
-        case Geom::CREATED_LIAISON : break;
-        case Geom::CREATED_FACE : break;
-        case Geom::REMOVED_VERTEX : break;
-        case Geom::REMOVED_LIAISON : break;
-        case Geom::REMOVED_FACE : break;
-        case Geom::CLEAR : break;
-    }
-}
-
-////////////////////////////////////////////////////////////
 void Shape::clear()
 {
 	m_geom.clear();
