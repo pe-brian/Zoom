@@ -18,12 +18,8 @@ using namespace zin;
 int main()
 {
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "Zoom example 3");
-	
-	sf::Mouse::setPosition(sf::Vector2i(400, 0));
-
+	sf::Mouse::setPosition({400, 0});
 	sf::Clock clock;
-
-	LightManager manager;
 
 	Geom geom = Geom::segment({100, 100}, {125, 125})
 			  + Geom::segment({300, 200}, {450, 325})
@@ -34,17 +30,22 @@ int main()
 			  + Geom::segment({125, 475}, {175, 475});
 	
 	Shape shape(geom);
-	shape.setLiaisonWidth(3);
-	shape.setLiaisonColor(Color::White);
+	shape.setLiaisonsWidth(3);
+	shape.setLiaisonsColor(Color::White);
 
-	Light light({400, 0}, 150, Color::Green);
-	Spot spot({800, 400}, 0, 400, 0.785398163, Color(190, 150, 150));
+	LightManager lightManager;
 
-	manager.attach(light);
-	manager.attach(spot);
-	manager.attach(geom);
+	Light light(150, Color::Green);
+	light.setPosition({400, 0});
 
-	Variation<double> angle(-1.9, -1.2, 0.3, 0, true, true);
+	Spot spot(400, toRads(45), Color(190, 150, 150));
+	spot.setPosition({700, 400});
+
+	lightManager.attach(light);
+	lightManager.attach(spot);
+	lightManager.attach(geom);
+
+	Variation<double> angle(toRads(180), toRads(225), toRads(20), 0, true, true);
 
 	while( App.isOpen() )
 	{
@@ -58,8 +59,8 @@ int main()
 			else if( Event.type == sf::Event::KeyPressed && Event.key.code == sf::Keyboard::Escape )
 				App.close();
 		
-			else if( Event.type == sf::Event::MouseButtonPressed  )
-				Shape::debugModeEnabled = !Shape::debugModeEnabled;
+			else if( Event.type == sf::Event::MouseButtonPressed )
+				lightManager.setDebugMode(!lightManager.getDebugMode());
 
 			else if( Event.type == sf::Event::MouseMoved )
 				light.setPosition(Event.mouseMove.x, Event.mouseMove.y);
@@ -67,12 +68,12 @@ int main()
 
 		sf::Time timeStep = clock.restart();
 
-		manager.update();
+		lightManager.update();
 		spot.setRotation(angle.update(timeStep));
 	
 		App.clear();
 		App.draw(shape);
-		App.draw(manager);
+		App.draw(lightManager);
 
 		App.display();
 	}

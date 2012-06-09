@@ -46,12 +46,22 @@ public:
     ////////////////////////////////////////////////////////////
     // Default constructor
     ////////////////////////////////////////////////////////////
-	Light(const Coords& position = Coords(0, 0), double radius = 100, Color color = Color(255, 255, 255, 200), Uint32 complexity = 16);
+	Light(double radius = 100, Color color = Color{255, 255, 255, 200}, Uint32 complexity = 16);
     
     ////////////////////////////////////////////////////////////
     // Generate the light
     ////////////////////////////////////////////////////////////
 	virtual void generate(const std::vector<Segment>& segments);
+
+    ////////////////////////////////////////////////////////////
+    // Set the debug mode
+    ////////////////////////////////////////////////////////////
+    void setDebugMode(bool enabled);
+
+    ////////////////////////////////////////////////////////////
+    // Get the debug mode
+    ////////////////////////////////////////////////////////////
+    bool getDebugMode();
 
 protected:
 
@@ -64,14 +74,22 @@ protected:
     // Draw the light
     ////////////////////////////////////////////////////////////
     void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-    
+
+    ////////////////////////////////////////////////////////////
+    // Update the rendering
+    ////////////////////////////////////////////////////////////
+    void update() const;
+
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-	double             m_radius;
-	Color              m_color;
-	Uint32             m_complexity;
-    std::vector<Color> m_vertexColor;
+    bool                                 m_debugMode;
+    mutable bool                         m_needUpdate;
+	double                               m_radius;
+	Color                                m_color;
+	Uint32                               m_complexity;
+    std::vector<Color>                   m_colors;
+    mutable std::vector<sf::VertexArray> m_vertexArray;
 };
 
 }

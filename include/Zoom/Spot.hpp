@@ -41,7 +41,7 @@ public:
     ////////////////////////////////////////////////////////////
     // Default constructor
     ////////////////////////////////////////////////////////////
-	Spot(const Coords& pos = Coords(0, 0), double angle = 0, double radius = 100, double aperture = 0.785398163, Color color = Color(255, 255, 255, 200), Uint32 complexity = 4);
+	Spot(double radius = 100, double aperture = .785398163f, Color color = Color(255, 255, 255, 200), Uint32 complexity = 4);
     
     ////////////////////////////////////////////////////////////
     // Generate the spot

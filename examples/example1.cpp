@@ -19,23 +19,24 @@ int main()
 
    sf::Clock clock;
 
-   Curve curve = Curve::bezier({767, 410, 1000, 900, 1000, 30, 500, 30, 1, 30, 50, 560, 169, 410}) + Curve({169, 410, 228, 321, 386, 571, 553, 261, 421, 218, 575, 464, 767, 410});
+   Curve curve = Curve::bezier({{767, 410}, {1000, 900}, {1000, 30}, {500, 30}, {1, 30}, {50, 560}, {169, 410}})
+               + Curve({{169, 410}, {228, 321}, {386, 571}, {553, 261}, {421, 218}, {575, 464}, {767, 410}});
    curve.setOrigin(500, 370);
 
-   Shape shape1(curve);
-   shape1.setVertexColor(Color::Green);
-   shape1.setLiaisonWidth(1);
+   Shape curveShape(curve);
+   curveShape.setVerticesColor(Color::Green);
+   curveShape.setLiaisonsWidth(1);
    
-   Geom geom2 = Geom::star({0, 0}, 0, 30, 60, 20);
+   Geom star = Geom::star(30, 60, 20);
 
-   Shape shape2(geom2);
-   shape2.showLiaison(false);
-   shape2.setFaceColor(Color::Yellow);
+   Shape starShape(star);
+   starShape.showLiaisons(false);
+   starShape.setFacesColor(Color::Yellow);
 
-   Kinetic kinetic(curve, 400, 0, true);
+   Kinetic kinetic(curve, 400, 0, true);  
    
-   Variation<double> var1(0.4, 1, 0.2, 0, true, true);
-   Variation<double> var2(0, 6.28318531, 0.2, 0, true);
+   Variation<double> scaleVariation(.4, 1, .2, 0, true, true);
+   Variation<double> angleVariation(0, 360, toRads(15), 0, true);
 
    while( App.isOpen() )
    {
@@ -49,21 +50,27 @@ int main()
          else if( Event.type == sf::Event::KeyPressed && Event.key.code == sf::Keyboard::Escape )
             App.close();
 
-         else if( Event.type == sf::Event::MouseButtonPressed  )
-            Shape::debugModeEnabled = !Shape::debugModeEnabled;
+         else if( Event.type == sf::Event::MouseButtonPressed )
+         {
+            curveShape.setDebugMode(!curveShape.getDebugMode());
+            starShape.setDebugMode(!starShape.getDebugMode());
+         }
       }
 
       sf::Time timeStep = clock.restart();
 
-      double scale = var1.update(timeStep);
-      geom2.setPosition(curve.convertToGlobal(kinetic.update(timeStep)));
-      geom2.setScale(scale, scale);
-      curve.setRotation(var2.update(timeStep));
+      double scale = scaleVariation.update(timeStep);
+      Vector2d pos = curve.convertToGlobal(kinetic.update(timeStep));
+
+      star.setPosition(pos);
+      star.setScale(scale, scale);
+
+      curve.setRotation(angleVariation.update(timeStep));
       curve.setScale(scale, scale);
 
       App.clear(sf::Color(30, 30, 30));
-      App.draw(shape1);
-      App.draw(shape2);
+      App.draw(curveShape);
+      App.draw(starShape);
       App.display();
    }
    

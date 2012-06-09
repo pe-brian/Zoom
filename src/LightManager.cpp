@@ -29,7 +29,8 @@ namespace zin
 
 ////////////////////////////////////////////////////////////	
 LightManager::LightManager(Uint32 width, Uint32 height, const Color& ambiantLightColor) :
-m_ambiantLightColor(sf::Color(ambiantLightColor.r, ambiantLightColor.g, ambiantLightColor.b, ambiantLightColor.a))
+m_ambiantLightColor(sf::Color(ambiantLightColor.r, ambiantLightColor.g, ambiantLightColor.b, ambiantLightColor.a)),
+m_debugMode(false)
 {
     m_renderTexture.create(width, height);
     m_renderTexture.clear(m_ambiantLightColor);
@@ -93,6 +94,21 @@ void LightManager::update()
         m_renderTexture.draw(*light);
 
     m_renderTexture.display();
+}
+
+////////////////////////////////////////////////////////////
+void LightManager::setDebugMode(bool enabled)
+{
+    for( auto& light : m_lights )
+        light->setDebugMode(enabled);
+
+    m_debugMode = enabled;
+}
+
+////////////////////////////////////////////////////////////
+bool LightManager::getDebugMode()
+{
+    return m_debugMode;
 }
 
 ////////////////////////////////////////////////////////////
