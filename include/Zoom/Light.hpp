@@ -90,6 +90,7 @@ protected:
 	Uint32                               m_complexity;
     std::vector<Color>                   m_colors;
     mutable std::vector<sf::VertexArray> m_vertexArray;
+    mutable std::vector<sf::VertexArray> m_vertexArrayDebug;
 };
 
 }

@@ -36,7 +36,7 @@ int main()
    Kinetic kinetic(curve, 400, 0, true);  
    
    Variation<double> scaleVariation(.4, 1, .2, 0, true, true);
-   Variation<double> angleVariation(0, 360, toRads(15), 0, true);
+   Variation<double> angleVariation(0, toRads(360), toRads(15), 0, true);
 
    while( App.isOpen() )
    {

@@ -229,6 +229,11 @@ protected:
     void onFaceRemoved(size_t indice);
 
     ////////////////////////////////////////////////////////////
+    // Method called when a vertex is moved
+    ////////////////////////////////////////////////////////////
+    void onVertexMoved();
+
+    ////////////////////////////////////////////////////////////
     // Method called when the geom is erased
     ////////////////////////////////////////////////////////////
     void onErasing();
@@ -241,6 +246,7 @@ private:
     bool                                 m_debugMode;
     Geom&                                m_geom;
     mutable std::vector<sf::VertexArray> m_vertexArray;
+    mutable std::vector<sf::VertexArray> m_vertexArrayDebug;
     mutable bool                         m_needUpdate,
                                          m_isVertexShowed,
                                          m_isLiaisonShowed,

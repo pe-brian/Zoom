@@ -57,11 +57,15 @@ void Light::update() const
     if( m_needUpdate )
     {
         m_vertexArray.clear();
+        m_vertexArrayDebug.clear();
 
         for( size_t k(0); k < getFacesCount(); k++ )
         {
             Face& face = getFace(k);
-            Triangle triangle = face.getTriangle();
+
+            Vector2d p1 = face.v1.getCoords();
+            Vector2d p2 = face.v2.getCoords();
+            Vector2d p3 = face.v3.getCoords();
                 
             Color c1 = m_colors[face.v1.getIndice()],
                   c2 = m_colors[face.v2.getIndice()],
@@ -69,9 +73,9 @@ void Light::update() const
                     
             sf::VertexArray array(sf::Triangles, 3);
 
-            array[0].position = sf::Vector2f(triangle.p1.x, triangle.p1.y);
-            array[1].position = sf::Vector2f(triangle.p2.x, triangle.p2.y);
-            array[2].position = sf::Vector2f(triangle.p3.x, triangle.p3.y);
+            array[0].position = sf::Vector2f(p1.x, p1.y);
+            array[1].position = sf::Vector2f(p2.x, p2.y);
+            array[2].position = sf::Vector2f(p3.x, p3.y);
 
             array[0].color = sf::Color(c1.r, c1.g, c1.b, c1.a);
             array[1].color = sf::Color(c2.r, c2.g, c2.b, c2.a);
@@ -84,14 +88,18 @@ void Light::update() const
         {
             for( size_t k(0); k < getFacesCount(); k++ )
             {
-                Triangle triangle = getFace(k).getTriangle();
+                Face& face = getFace(k);
+
+                Vector2d p1 = face.v1.getCoords();
+                Vector2d p2 = face.v2.getCoords();
+                Vector2d p3 = face.v3.getCoords();
                     
                 sf::VertexArray lines(sf::LinesStrip, 4);
 
-                lines[0].position = sf::Vector2f(triangle.p1.x, triangle.p1.y);
-                lines[1].position = sf::Vector2f(triangle.p2.x, triangle.p2.y);
-                lines[2].position = sf::Vector2f(triangle.p3.x, triangle.p3.y);
-                lines[3].position = sf::Vector2f(triangle.p1.x, triangle.p1.y);
+                lines[0].position = sf::Vector2f(p1.x, p1.y);
+                lines[1].position = sf::Vector2f(p2.x, p2.y);
+                lines[2].position = sf::Vector2f(p3.x, p3.y);
+                lines[3].position = sf::Vector2f(p1.x, p1.y);
 
                 lines[0].color = sf::Color::White;
                 lines[1].color = sf::Color::White;
@@ -101,7 +109,7 @@ void Light::update() const
                 m_vertexArray.push_back(lines);
             }
 
-            const Rect& rect = getBounds();
+            const Rect& rect = getGlobalBounds();
             Point origin = convertToGlobal(getOrigin());
 
             sf::VertexArray circle(sf::LinesStrip, 10);
@@ -115,7 +123,7 @@ void Light::update() const
                 angus+=.698131701f;
             }
 
-            m_vertexArray.push_back(circle);
+            m_vertexArrayDebug.push_back(circle);
 
             sf::VertexArray lines(sf::LinesStrip, 5);
 
@@ -131,22 +139,11 @@ void Light::update() const
             lines[3].color = sf::Color::Red;
             lines[4].color = sf::Color::Red;
 
-            m_vertexArray.push_back(lines);
+            m_vertexArrayDebug.push_back(lines);
         }
 
         m_needUpdate = false;
     }
-}
-
-////////////////////////////////////////////////////////////
-void Light::draw(sf::RenderTarget& target, sf::RenderStates states) const
-{
-    getTransform();
-
-    update();
-
-    for( auto& vertexArray : m_vertexArray )
-        target.draw(vertexArray, states);
 }
 
 ////////////////////////////////////////////////////////////
@@ -248,6 +245,31 @@ void Light::addTriangle(Point p1, Point p2, Uint32 begin, const std::vector<Segm
     m_colors.push_back({m_color.r, m_color.g, m_color.b, char(255*(m_radius - p1.length()) / m_radius)});
 
     addFace(getVertex(0), addVertex(p1), addVertex(p2));
+}
+
+////////////////////////////////////////////////////////////
+void Light::draw(sf::RenderTarget& target, sf::RenderStates states) const
+{
+    double* values = getTransform().getValues();
+
+    sf::Transform defaultTransform = states.transform;
+
+    states.transform = sf::Transform(float(values[0]), float(values[1]), float(values[2]),
+                                     float(values[3]), float(values[4]), float(values[5]),
+                                     float(values[6]), float(values[7]), float(values[8]));
+
+    update();
+
+    for( auto& vertexArray : m_vertexArray )
+        target.draw(vertexArray, states);
+
+    if( m_debugMode )
+    {
+        states.transform = defaultTransform;
+
+        for( auto& vertexArray : m_vertexArrayDebug )
+            target.draw(vertexArray, states);
+    }
 }
 
 }

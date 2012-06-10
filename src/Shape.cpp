@@ -286,19 +286,24 @@ void Shape::update() const
     if( m_needUpdate )
     {
         m_vertexArray.clear();
+        m_vertexArrayDebug.clear();
 
         if( m_debugMode )
         {
             for( size_t k(0); k < m_geom.getFacesCount(); k++ )
             {
-                Triangle triangle = m_geom.getFace(k).getTriangle();
+                Face& face = m_geom.getFace(k);
+
+                Vector2d p1 = face.v1.getCoords();
+                Vector2d p2 = face.v2.getCoords();
+                Vector2d p3 = face.v3.getCoords();
                     
                 sf::VertexArray lines(sf::LinesStrip, 4);
 
-                lines[0].position = sf::Vector2f(triangle.p1.x, triangle.p1.y);
-                lines[1].position = sf::Vector2f(triangle.p2.x, triangle.p2.y);
-                lines[2].position = sf::Vector2f(triangle.p3.x, triangle.p3.y);
-                lines[3].position = sf::Vector2f(triangle.p1.x, triangle.p1.y);
+                lines[0].position = sf::Vector2f(p1.x, p1.y);
+                lines[1].position = sf::Vector2f(p2.x, p2.y);
+                lines[2].position = sf::Vector2f(p3.x, p3.y);
+                lines[3].position = sf::Vector2f(p1.x, p1.y);
 
                 lines[0].color = sf::Color::White;
                 lines[1].color = sf::Color::White;
@@ -310,12 +315,15 @@ void Shape::update() const
 
             for( size_t k(0); k < m_geom.getLiaisonsCount(); k++ )
             {
-                Segment segment = m_geom.getLiaison(k).getSegment();
+                Liaison& liaison = m_geom.getLiaison(k);
+
+                Vector2d p1 = liaison.v1.getCoords();
+                Vector2d p2 = liaison.v2.getCoords();
 
                 sf::VertexArray line(sf::Lines, 2);
 
-                line[0].position = sf::Vector2f(segment.p1.x, segment.p1.y);
-                line[1].position = sf::Vector2f(segment.p2.x, segment.p2.y);
+                line[0].position = sf::Vector2f(p1.x, p1.y);
+                line[1].position = sf::Vector2f(p2.x, p2.y);
 
                 line[0].color = sf::Color::White;
                 line[1].color = sf::Color::White;
@@ -323,7 +331,7 @@ void Shape::update() const
                 m_vertexArray.push_back(line);
             }
 
-            const Rect& rect = m_geom.getBounds();
+            const Rect& rect = m_geom.getGlobalBounds();
             Point origin = m_geom.convertToGlobal(m_geom.getOrigin());
 
             sf::VertexArray circle(sf::LinesStrip, 10);
@@ -337,7 +345,7 @@ void Shape::update() const
                 angus+=.698131701f;
             }
 
-            m_vertexArray.push_back(circle);
+            m_vertexArrayDebug.push_back(circle);
 
             sf::VertexArray lines(sf::LinesStrip, 5);
 
@@ -353,7 +361,7 @@ void Shape::update() const
             lines[3].color = sf::Color::Red;
             lines[4].color = sf::Color::Red;
 
-            m_vertexArray.push_back(lines);
+            m_vertexArrayDebug.push_back(lines);
         }
 
         else
@@ -362,14 +370,19 @@ void Shape::update() const
             {
                 if( m_faceInfos[k].showed )
                 {
-                    Triangle triangle = m_geom.getFace(k).getTriangle();
-                    Color color = m_faceInfos[k].color;
+                    Face& face = m_geom.getFace(k);
+
+                    Vector2d p1 = face.v1.getCoords();
+                    Vector2d p2 = face.v2.getCoords();
+                    Vector2d p3 = face.v3.getCoords();
                     
                     sf::VertexArray array(sf::Triangles, 3);
 
-                    array[0].position = sf::Vector2f(triangle.p1.x, triangle.p1.y);
-                    array[1].position = sf::Vector2f(triangle.p2.x, triangle.p2.y);
-                    array[2].position = sf::Vector2f(triangle.p3.x, triangle.p3.y);
+                    array[0].position = sf::Vector2f(p1.x, p1.y);
+                    array[1].position = sf::Vector2f(p2.x, p2.y);
+                    array[2].position = sf::Vector2f(p3.x, p3.y);
+
+                    Color color = m_faceInfos[k].color;
 
                     array[0].color = sf::Color(color.r, color.g, color.b, color.a);
                     array[1].color = sf::Color(color.r, color.g, color.b, color.a);
@@ -383,14 +396,17 @@ void Shape::update() const
             {
                 if( m_liaisonInfos[k].showed )
                 {
-                    Segment segment = m_geom.getLiaison(k).getSegment();
+                    Liaison& liaison = m_geom.getLiaison(k);
 
-                    Color color = m_vertexInfos[k].color;
+                    Vector2d p1 = liaison.v1.getCoords();
+                    Vector2d p2 = liaison.v2.getCoords();
 
                     sf::VertexArray line(sf::Lines, 2);
 
-                    line[0].position = sf::Vector2f(segment.p1.x, segment.p1.y);
-                    line[1].position = sf::Vector2f(segment.p2.x, segment.p2.y);
+                    line[0].position = sf::Vector2f(p1.x, p1.y);
+                    line[1].position = sf::Vector2f(p2.x, p2.y);
+
+                    Color color = m_vertexInfos[k].color;
 
                     line[0].color = sf::Color(color.r, color.g, color.b, color.a);
                     line[1].color = sf::Color(color.r, color.g, color.b, color.a);
@@ -405,15 +421,14 @@ void Shape::update() const
 
                     if( m_vertexInfos[k].size > 0 )
                     {
-                        Point point = m_geom.convertToGlobal(m_geom.getVertex(k).getCoords());
-                        Color color = m_vertexInfos[k].color;
+                        Point point = m_geom.getVertex(k).getCoords();
 
                         sf::VertexArray circle(sf::TrianglesFan, 40);
 
                         circle[0].position = sf::Vector2f(point.x, point.y);
-                        circle[0].color = sf::Color::Red;
-
+                        Color color = m_vertexInfos[k].color;
                         sf::Color vertexColor = sf::Color(m_vertexInfos[k].color.r, m_vertexInfos[k].color.g, m_vertexInfos[k].color.b, m_vertexInfos[k].color.a);
+                        circle[0].color = vertexColor;
 
                         double angus;
                             
@@ -421,6 +436,7 @@ void Shape::update() const
                         {
                             circle[k].position = sf::Vector2f(point.x + std::cos(angus) * m_vertexInfos[k].size, point.y + std::sin(angus) * m_vertexInfos[k].size);
                             circle[k].color = vertexColor;
+
                             angus+=.157079633f;
                         }
 
@@ -439,14 +455,34 @@ void Shape::onTransformUpdated()
 }
 
 ////////////////////////////////////////////////////////////
+void Shape::onVertexMoved()
+{
+    m_needUpdate = true;
+}
+
+////////////////////////////////////////////////////////////
 void Shape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 {
-    m_geom.getTransform();
+    double* values = m_geom.getTransform().getValues();
+
+    sf::Transform defaultTransform = states.transform;
+
+    states.transform = sf::Transform(float(values[0]), float(values[1]), float(values[2]),
+                                     float(values[3]), float(values[4]), float(values[5]),
+                                     float(values[6]), float(values[7]), float(values[8]));
 
     update();
 
     for( auto& vertexArray : m_vertexArray )
         target.draw(vertexArray, states);
+
+    if( m_debugMode )
+    {
+        states.transform = defaultTransform;
+
+        for( auto& vertexArray : m_vertexArrayDebug )
+            target.draw(vertexArray, states);
+    }
 }
 
 }
