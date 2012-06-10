@@ -66,10 +66,6 @@ void Light::update() const
             Vector2d p1 = face.v1.getCoords();
             Vector2d p2 = face.v2.getCoords();
             Vector2d p3 = face.v3.getCoords();
-                
-            Color c1 = m_colors[face.v1.getIndice()],
-                  c2 = m_colors[face.v2.getIndice()],
-                  c3 = m_colors[face.v3.getIndice()];
                     
             sf::VertexArray array(sf::Triangles, 3);
 
@@ -77,9 +73,9 @@ void Light::update() const
             array[1].position = sf::Vector2f(p2.x, p2.y);
             array[2].position = sf::Vector2f(p3.x, p3.y);
 
-            array[0].color = sf::Color(c1.r, c1.g, c1.b, c1.a);
-            array[1].color = sf::Color(c2.r, c2.g, c2.b, c2.a);
-            array[2].color = sf::Color(c3.r, c3.g, c3.b, c3.a);
+            array[0].color = m_colors[face.v1.getIndice()];
+            array[1].color = m_colors[face.v2.getIndice()];
+            array[2].color = m_colors[face.v3.getIndice()];
                     
             m_vertexArray.push_back(array);
         }

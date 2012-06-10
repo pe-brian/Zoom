@@ -30,12 +30,13 @@
 ////////////////////////////////////////////////////////////
 #include <string>
 #include <sstream>
+#include <SFML/Graphics/Color.hpp>
 #include <Zoom/Config.hpp>
 
 namespace zin
 {
 	
-class ZOOM_API Color
+class ZOOM_API Color : public sf::Color
 {
 public:
 
@@ -193,8 +194,6 @@ public:
     static const Color SlateGray;
     static const Color DarkSlateGray;
     static const Color Black;
-
-	Uint8 r, g, b, a;
 };
 
 }

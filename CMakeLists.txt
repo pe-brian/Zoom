@@ -21,10 +21,10 @@ add_definitions(
    -DZOOM_EXPORTS
 )
 
-# add an option for choosing the build type (shared or static)
+# add an option to choose the build type (shared or static)
 set(BUILD_SHARED_LIBS TRUE CACHE BOOL "TRUE to build SFML as shared libraries, FALSE to build it as static libraries")
 
-# add an option for building the examples
+# add an option to build or not the examples
 set(BUILD_EXAMPLES FALSE CACHE BOOL "TRUE to build the SFML examples, FALSE to ignore them")
 
 # add the source files

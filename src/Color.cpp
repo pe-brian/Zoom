@@ -29,10 +29,7 @@ namespace zin
 
 ////////////////////////////////////////////////////////////
 Color::Color(Uint8 red, Uint8 green, Uint8 blue, Uint8 alpha) :
-r(red),
-g(green),
-b(blue),
-a(alpha) {}
+sf::Color(red, green, blue, alpha) {}
 
 ////////////////////////////////////////////////////////////    
 Color Color::getFromWebCode(const std::string& webColor)

@@ -382,11 +382,9 @@ void Shape::update() const
                     array[1].position = sf::Vector2f(p2.x, p2.y);
                     array[2].position = sf::Vector2f(p3.x, p3.y);
 
-                    Color color = m_faceInfos[k].color;
-
-                    array[0].color = sf::Color(color.r, color.g, color.b, color.a);
-                    array[1].color = sf::Color(color.r, color.g, color.b, color.a);
-                    array[2].color = sf::Color(color.r, color.g, color.b, color.a);
+                    array[0].color = m_faceInfos[k].color;
+                    array[1].color = m_faceInfos[k].color;
+                    array[2].color = m_faceInfos[k].color;
                     
                     m_vertexArray.push_back(array);
                 }
@@ -406,10 +404,8 @@ void Shape::update() const
                     line[0].position = sf::Vector2f(p1.x, p1.y);
                     line[1].position = sf::Vector2f(p2.x, p2.y);
 
-                    Color color = m_vertexInfos[k].color;
-
-                    line[0].color = sf::Color(color.r, color.g, color.b, color.a);
-                    line[1].color = sf::Color(color.r, color.g, color.b, color.a);
+                    line[0].color = m_vertexInfos[k].color;
+                    line[1].color = m_vertexInfos[k].color;
 
                     m_vertexArray.push_back(line);
                 }
@@ -426,16 +422,14 @@ void Shape::update() const
                         sf::VertexArray circle(sf::TrianglesFan, 40);
 
                         circle[0].position = sf::Vector2f(point.x, point.y);
-                        Color color = m_vertexInfos[k].color;
-                        sf::Color vertexColor = sf::Color(m_vertexInfos[k].color.r, m_vertexInfos[k].color.g, m_vertexInfos[k].color.b, m_vertexInfos[k].color.a);
-                        circle[0].color = vertexColor;
+                        circle[0].color = m_vertexInfos[k].color;
 
                         double angus;
                             
                         for( size_t k(1); k < 40; k++ )
                         {
                             circle[k].position = sf::Vector2f(point.x + std::cos(angus) * m_vertexInfos[k].size, point.y + std::sin(angus) * m_vertexInfos[k].size);
-                            circle[k].color = vertexColor;
+                            circle[k].color = m_vertexInfos[k].color;
 
                             angus+=.157079633f;
                         }
