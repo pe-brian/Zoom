@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // Zoom C++ library
-// Copyright (C) 2011-2012 ZinLibs (zinlibs@gmail.com)
+// Copyright (C) 2011-2012 Pierre-Emmanuel BRIAN (zinlibs@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -41,17 +41,17 @@ class ZOOST_API Kinetic
 public:
 
     ////////////////////////////////////////////////////////////
-    // 
+    // Default constructor
     ////////////////////////////////////////////////////////////
     Kinetic(const Curve& curve, double speed = 1.f, double current = 0.f, bool isRepeatable = false);
 
     ////////////////////////////////////////////////////////////
-    // 
+    // Return true if the kinetic is ended
     ////////////////////////////////////////////////////////////
     bool isEnded();
     
     ////////////////////////////////////////////////////////////
-    // 
+    // Update the kinetic
     ////////////////////////////////////////////////////////////
     Point update(sf::Time timeStep);
 

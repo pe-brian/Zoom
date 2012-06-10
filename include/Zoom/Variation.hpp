@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // Zoom C++ library
-// Copyright (C) 2011-2012 ZinLibs (zinlibs@gmail.com)
+// Copyright (C) 2011-2012 Pierre-Emmanuel BRIAN (zinlibs@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -40,12 +40,12 @@ class ZOOST_API Variation
 public:
 
     ////////////////////////////////////////////////////////////
-    // 
+    // Default constructor
     ////////////////////////////////////////////////////////////
     Variation(T begin, T end, double speed = 1, double current = 0.f, bool isRepeatable = false, bool isRevertable = false);
 
     ////////////////////////////////////////////////////////////
-    // 
+    // Update the variation
     ////////////////////////////////////////////////////////////
     T update(sf::Time timeStep);
 

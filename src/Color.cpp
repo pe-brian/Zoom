@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
-// Zoost C++ library
-// Copyright (C) 2011-2012 ZinLibs (zinlibs@gmail.com)
+// Zoom C++ library
+// Copyright (C) 2011-2012 Pierre-Emmanuel BRIAN (zinlibs@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.

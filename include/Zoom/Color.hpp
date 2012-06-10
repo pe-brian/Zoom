@@ -1,7 +1,7 @@
 ////////////////////////////////////////////////////////////
 //
 // Zoom C++ library
-// Copyright (C) 2011-2012 ZinLibs (zinlibs@gmail.com)
+// Copyright (C) 2011-2012 Pierre-Emmanuel BRIAN (zinlibs@gmail.com)
 //
 // This software is provided 'as-is', without any express or implied warranty.
 // In no event will the authors be held liable for any damages arising from the use of this software.
@@ -40,12 +40,12 @@ class ZOOM_API Color
 public:
 
     ////////////////////////////////////////////////////////////
-    // 
+    // Default constructor
     ////////////////////////////////////////////////////////////
     Color(Uint8 red = 0, Uint8 green = 0, Uint8 blue = 0, Uint8 alpha = 255);
     
     ////////////////////////////////////////////////////////////
-    // 
+    // Get a color from a web color code
     ////////////////////////////////////////////////////////////
     static Color getFromWebCode(const std::string& webCode);
 
