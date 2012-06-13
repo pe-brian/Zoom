@@ -16,6 +16,7 @@ using namespace zin;
 int main()
 {
    sf::RenderWindow App(sf::VideoMode(1000, 700, 32), "Zoom example 1");
+   App.setVerticalSyncEnabled(true);
 
    sf::Clock clock;
 

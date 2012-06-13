@@ -22,6 +22,7 @@
 ////////////////////////////////////////////////////////////
 
 #include <Zoom/Shape.hpp>
+#include <Zoost/Converter.hpp>
 
 namespace zin
 {
@@ -396,16 +397,23 @@ void Shape::update() const
                 {
                     Liaison& liaison = m_geom.getLiaison(k);
 
-                    Vector2d p1 = liaison.v1.getCoords();
-                    Vector2d p2 = liaison.v2.getCoords();
+                    Vector2d a = liaison.v1.getCoords();
+                    Vector2d b = liaison.v2.getCoords();
 
-                    sf::VertexArray line(sf::Lines, 2);
+                    double angle = std::atan((b.y - a.y) / (b.x - a.x));
+                    double width = m_liaisonInfos[k].width;
 
-                    line[0].position = sf::Vector2f(p1.x, p1.y);
-                    line[1].position = sf::Vector2f(p2.x, p2.y);
+                    sf::VertexArray line(sf::Quads, 4);
+
+                    line[0].position = sf::Vector2f(a.x + width * std::cos(angle + toRads( 90)), a.y + width * std::sin(angle + toRads( 90)));
+                    line[1].position = sf::Vector2f(a.x + width * std::cos(angle + toRads(270)), a.y + width * std::sin(angle + toRads(270)));
+                    line[2].position = sf::Vector2f(b.x + width * std::cos(angle + toRads(270)), b.y + width * std::sin(angle + toRads(270)));
+                    line[3].position = sf::Vector2f(b.x + width * std::cos(angle + toRads( 90)), b.y + width * std::sin(angle + toRads( 90)));
 
                     line[0].color = m_vertexInfos[k].color;
                     line[1].color = m_vertexInfos[k].color;
+                    line[2].color = m_vertexInfos[k].color;
+                    line[3].color = m_vertexInfos[k].color;
 
                     m_vertexArray.push_back(line);
                 }
@@ -461,9 +469,9 @@ void Shape::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     sf::Transform defaultTransform = states.transform;
 
-    states.transform = sf::Transform(float(values[0]), float(values[1]), float(values[2]),
-                                     float(values[3]), float(values[4]), float(values[5]),
-                                     float(values[6]), float(values[7]), float(values[8]));
+    states.transform = sf::Transform(static_cast<float>(values[0]), static_cast<float>(values[1]), static_cast<float>(values[2]),
+                                     static_cast<float>(values[3]), static_cast<float>(values[4]), static_cast<float>(values[5]),
+                                     static_cast<float>(values[6]), static_cast<float>(values[7]), static_cast<float>(values[8]));
 
     update();
 

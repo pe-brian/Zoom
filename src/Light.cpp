@@ -250,9 +250,9 @@ void Light::draw(sf::RenderTarget& target, sf::RenderStates states) const
 
     sf::Transform defaultTransform = states.transform;
 
-    states.transform = sf::Transform(float(values[0]), float(values[1]), float(values[2]),
-                                     float(values[3]), float(values[4]), float(values[5]),
-                                     float(values[6]), float(values[7]), float(values[8]));
+    states.transform = sf::Transform(static_cast<float>(values[0]), static_cast<float>(values[1]), static_cast<float>(values[2]),
+                                     static_cast<float>(values[3]), static_cast<float>(values[4]), static_cast<float>(values[5]),
+                                     static_cast<float>(values[6]), static_cast<float>(values[7]), static_cast<float>(values[8]));
 
     update();
 

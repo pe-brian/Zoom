@@ -18,6 +18,8 @@ using namespace zin;
 int main()
 {
 	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "Zoom example 3");
+	App.setVerticalSyncEnabled(true);
+	
 	sf::Mouse::setPosition({400, 0});
 	sf::Clock clock;
 
