@@ -13,8 +13,8 @@ using namespace zin;
 ////////////////////////////////////////////////////////////
 int main()
 {
-	sf::RenderWindow App(sf::VideoMode(1000, 700, 32), "Zoom example 2");
-	App.setVerticalSyncEnabled(true);
+	sf::RenderWindow app(sf::VideoMode(1000, 700, 32), "Zoom example 2");
+	app.setVerticalSyncEnabled(true);
 
 	unsigned int frame = 0;
 
@@ -40,56 +40,56 @@ int main()
 	rectangleShape.setFacesColor(Color::Blue);
 	rectangleShape.setLiaisonsColor(Color::White);
 
-	while( App.isOpen() )
+	while( app.isOpen() )
 	{
-		sf::Event Event;
+		sf::Event event;
 	
-		while( App.pollEvent(Event) )
+		while( app.pollEvent(event) )
 		{
-			if( Event.type == sf::Event::Closed )
-				App.close();
+			if( event.type == sf::Event::Closed )
+				app.close();
 
-			else if( Event.type == sf::Event::KeyPressed && Event.key.code == sf::Keyboard::Escape )
-				App.close();
+			else if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape )
+				app.close();
 
-			else if( Event.type == sf::Event::MouseWheelMoved )
+			else if( event.type == sf::Event::MouseWheelMoved )
 			{
 				if( frame < 2 )
 					frame++;
 				else frame = 0;
 
 				if( frame == 0 )
-					heartShape.setDebugMode(heart.contains(Coords(Event.mouseWheel.x, Event.mouseWheel.y)));
+					heartShape.setDebugMode(heart.contains(Coords(event.mouseWheel.x, event.mouseWheel.y)));
 
 				else if( frame == 1 )
-					snakeShape.setDebugMode(snake.contains(Coords(Event.mouseWheel.x, Event.mouseWheel.y)));
+					snakeShape.setDebugMode(snake.contains(Coords(event.mouseWheel.x, event.mouseWheel.y)));
 
-				else rectangleShape.setDebugMode(rectangle.contains(Coords(Event.mouseWheel.x, Event.mouseWheel.y)));
+				else rectangleShape.setDebugMode(rectangle.contains(Coords(event.mouseWheel.x, event.mouseWheel.y)));
 			}
 
-			else if( Event.type == sf::Event::MouseMoved )
+			else if( event.type == sf::Event::MouseMoved )
 			{
 				if( frame == 0 )
-					heartShape.setDebugMode(heart.contains(Coords(Event.mouseMove.x, Event.mouseMove.y)));
+					heartShape.setDebugMode(heart.contains(Coords(event.mouseMove.x, event.mouseMove.y)));
 
 				else if( frame == 1 )
-					snakeShape.setDebugMode(snake.contains(Coords(Event.mouseMove.x, Event.mouseMove.y)));
+					snakeShape.setDebugMode(snake.contains(Coords(event.mouseMove.x, event.mouseMove.y)));
 
-				else rectangleShape.setDebugMode(rectangle.contains(Coords(Event.mouseMove.x, Event.mouseMove.y)));
+				else rectangleShape.setDebugMode(rectangle.contains(Coords(event.mouseMove.x, event.mouseMove.y)));
 			}
 		}
 	
-		App.clear(sf::Color(30, 30, 30));
+		app.clear(sf::Color(30, 30, 30));
 
 	    if( frame == 0 )
-	    	App.draw(heartShape);
+	    	app.draw(heartShape);
 
 	    else if( frame == 1 )
-	    	App.draw(snakeShape);
+	    	app.draw(snakeShape);
 
-	    else App.draw(rectangleShape);
+	    else app.draw(rectangleShape);
 
-		App.display();
+		app.display();
 	}
 	
 	return EXIT_SUCCESS;

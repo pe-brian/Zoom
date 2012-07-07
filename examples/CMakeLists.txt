@@ -38,6 +38,11 @@ add_executable(
   example3.cpp
 )
 
+add_executable( 
+  example4
+  example4.cpp
+)
+
 include_directories(
    ${ZOOST_INCLUDE_DIR}
    ${ZOOM_INCLUDE_DIR}
@@ -65,6 +70,17 @@ target_link_libraries(
 target_link_libraries(
   example3
   zoom
+  ${ZOOST_LIBRARY}
+  ${SFML_GRAPHICS_LIBRARY}
+  ${SFML_WINDOW_LIBRARY}
+  ${SFML_SYSTEM_LIBRARY}
+)
+
+target_link_libraries(
+  example4
+  zoom
+  glu32
+  opengl32 
   ${ZOOST_LIBRARY}
   ${SFML_GRAPHICS_LIBRARY}
   ${SFML_WINDOW_LIBRARY}

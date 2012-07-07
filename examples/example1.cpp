@@ -15,8 +15,8 @@ using namespace zin;
 ////////////////////////////////////////////////////////////
 int main()
 {
-   sf::RenderWindow App(sf::VideoMode(1000, 700, 32), "Zoom example 1");
-   App.setVerticalSyncEnabled(true);
+   sf::RenderWindow app(sf::VideoMode(1000, 700, 32), "Zoom example 1");
+   app.setVerticalSyncEnabled(true);
 
    sf::Clock clock;
 
@@ -39,19 +39,19 @@ int main()
    Variation<double> scaleVariation(.4, 1, .2, 0, true, true);
    Variation<double> angleVariation(0, toRads(360), toRads(15), 0, true);
 
-   while( App.isOpen() )
+   while( app.isOpen() )
    {
-      sf::Event Event;
+      sf::Event event;
    
-      while( App.pollEvent(Event) )
+      while( app.pollEvent(event) )
       {     
-         if( Event.type == sf::Event::Closed )
-            App.close();
+         if( event.type == sf::Event::Closed )
+            app.close();
       
-         else if( Event.type == sf::Event::KeyPressed && Event.key.code == sf::Keyboard::Escape )
-            App.close();
+         else if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape )
+            app.close();
 
-         else if( Event.type == sf::Event::MouseButtonPressed )
+         else if( event.type == sf::Event::MouseButtonPressed )
          {
             curveShape.setDebugMode(!curveShape.getDebugMode());
             starShape.setDebugMode(!starShape.getDebugMode());
@@ -69,10 +69,10 @@ int main()
       curve.setRotation(angleVariation.update(timeStep));
       curve.setScale(scale, scale);
 
-      App.clear(sf::Color(30, 30, 30));
-      App.draw(curveShape);
-      App.draw(starShape);
-      App.display();
+      app.clear(sf::Color(30, 30, 30));
+      app.draw(curveShape);
+      app.draw(starShape);
+      app.display();
    }
    
    return EXIT_SUCCESS;

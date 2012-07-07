@@ -83,8 +83,8 @@ protected:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    bool                                 m_debugMode;
-    mutable bool                         m_needUpdate;
+    bool                                 m_debugMode = false;
+    mutable bool                         m_needUpdate = false;
 	double                               m_radius;
 	Color                                m_color;
 	Uint32                               m_complexity;

@@ -96,7 +96,7 @@ private:
     ////////////////////////////////////////////////////////////
     // Member data
     ////////////////////////////////////////////////////////////
-    bool                     m_debugMode;
+    bool                     m_debugMode = false;
     sf::BlendMode            m_blendMode;
     sf::RenderTexture        m_renderTexture;
     sf::Color                m_ambiantLightColor;

@@ -17,8 +17,8 @@ using namespace zin;
 ////////////////////////////////////////////////////////////
 int main()
 {
-	sf::RenderWindow App(sf::VideoMode(800, 600, 32), "Zoom example 3");
-	App.setVerticalSyncEnabled(true);
+	sf::RenderWindow app(sf::VideoMode(800, 600, 32), "Zoom example 3");
+	app.setVerticalSyncEnabled(true);
 	
 	sf::Mouse::setPosition({400, 0});
 	sf::Clock clock;
@@ -49,23 +49,23 @@ int main()
 
 	Variation<double> angle(toRads(180), toRads(225), toRads(20), 0, true, true);
 
-	while( App.isOpen() )
+	while( app.isOpen() )
 	{
-		sf::Event Event;
+		sf::Event event;
 	
-		while( App.pollEvent(Event) )
+		while( app.pollEvent(event) )
 		{		
-			if( Event.type == sf::Event::Closed )
-				App.close();
+			if( event.type == sf::Event::Closed )
+				app.close();
 		
-			else if( Event.type == sf::Event::KeyPressed && Event.key.code == sf::Keyboard::Escape )
-				App.close();
+			else if( event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape )
+				app.close();
 		
-			else if( Event.type == sf::Event::MouseButtonPressed )
+			else if( event.type == sf::Event::MouseButtonPressed )
 				lightManager.setDebugMode(!lightManager.getDebugMode());
 
-			else if( Event.type == sf::Event::MouseMoved )
-				light.setPosition(Event.mouseMove.x, Event.mouseMove.y);
+			else if( event.type == sf::Event::MouseMoved )
+				light.setPosition(event.mouseMove.x, event.mouseMove.y);
 		}
 
 		sf::Time timeStep = clock.restart();
@@ -73,11 +73,11 @@ int main()
 		lightManager.update();
 		spot.setRotation(angle.update(timeStep));
 	
-		App.clear();
-		App.draw(shape);
-		App.draw(lightManager);
+		app.clear();
+		app.draw(shape);
+		app.draw(lightManager);
 
-		App.display();
+		app.display();
 	}
 	
 	return EXIT_SUCCESS;

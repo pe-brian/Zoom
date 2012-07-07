@@ -8,6 +8,8 @@ set(
     ${SRCDIR}/Light.cpp
     ${SRCDIR}/Spot.cpp
     ${SRCDIR}/LightManager.cpp
+    ${SRCDIR}/ShaderPack.cpp
+    ${SRCDIR}/Sprite3d.cpp
 )
 
 add_library( 
